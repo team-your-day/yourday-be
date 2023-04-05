@@ -64,7 +64,7 @@ def make_middleware() -> List[Middleware]:
 
 def create_app() -> FastAPI:
     app_ = FastAPI(
-        title="Decorate TreeSchema",
+        title="Yourday API",
         description="API",
         version="1.0.0",
         docs_url="/docs",
