@@ -30,25 +30,16 @@ class DiaryRepository(BaseRepo):
             return []
         return parse_obj_as(List[DiarySchema], diary)
 
-    async def save_user(
-        self,
-        user_hash: str,
-        name: str,
-        nickname: str,
-        tone: ToneEnum,
-        interview: InterviewTypeEnum,
-    ) -> UserSchema:
-        _model = User(
-            user_hash=user_hash,
-            name=name,
-            nickname=nickname,
-            tone=tone.value,
-            interview=interview.value,
+    async def create_diary(self, user_id: int, content: str, saved_at: date) -> DiarySchema:
+        _model = self.model(
+            user_id=user_id,
+            content=content,
+            saved_at=saved_at,
         )
 
         session.add(_model)
         await session.flush()
-        return UserSchema.from_orm(_model)
+        return DiarySchema.from_orm(_model)
 
     async def update_user_info(
         self,
