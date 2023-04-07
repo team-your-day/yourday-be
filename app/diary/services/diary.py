@@ -113,3 +113,7 @@ Be slight humourous with confident tone. Have an empathy on my emotion. Write in
             diary_content,
             saved_at,
         )
+
+    @Transactional()
+    async def update_diary(self, user_id: int, month: int, day: int, content: str):
+        return await self.diary_repo.update_diary(user_id, month, day, content)

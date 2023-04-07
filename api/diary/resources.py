@@ -83,15 +83,10 @@ async def create_diary(
 )
 async def update_diary(
     request: Request,
+    month: str = Path(...),
+    day: str = Path(...),
     content: str = Body(..., description="수정할 일기 본문")
 ):
-    return {
-        "diary": {
-            "id": 1,
-            "user_id": 1,
-            "content": "맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다. 맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다.",
-            "thread_id": "bb743fdd-3273-44fe-9f3e-1713e0c5abe9",
-            "created_at": kst_now().strftime("%Y-%m-%d %H:%M:%S"),
-            "updated_at": kst_now().strftime("%Y-%m-%d %H:%M:%S"),
-        }
-    }
+    diary_service = DiaryService()
+    diary = await diary_service.update_diary(request.user.id, int(month), int(day), content)
+    return {"diary": diary}

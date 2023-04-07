@@ -41,27 +41,19 @@ class DiaryRepository(BaseRepo):
         await session.flush()
         return DiarySchema.from_orm(_model)
 
-    async def update_user_info(
-        self,
-        user_id: int,
-        name: Optional[str],
-        nickname: Optional[str],
-        tone: Optional[ToneEnum],
-        interview: Optional[InterviewTypeEnum],
-    ) -> Optional[UserSchema]:
-        user = await self.get_user(user_id)
-        if not user:
+    async def update_diary(self, user_id: int, month: int, day: int, content: str):
+        query = (
+            select(self.model)
+            .where(
+                self.model.user_id == user_id,
+                self.model.month == month,
+                self.model.day == day,
+            )
+        )
+        query = await session.execute(query)
+        diary = query.scalars().first()
+
+        if not diary:
             return None
-
-        if not name:
-            user.name = name
-        if not nickname:
-            user.nickname = nickname
-        if not tone:
-            user.tone = tone
-        if not interview:
-            user.interview = interview
-
-        session.add(user)
-        await session.flush()
-        return UserSchema.from_orm(user)
+        diary.content = content
+        return DiarySchema.from_orm(diary)

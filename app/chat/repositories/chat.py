@@ -7,4 +7,6 @@ from core.repository.base import BaseRepo
 
 
 class ChatRepository(BaseRepo):
-    ...
+
+    async def get_chat_histories(self, user_id, month, day):
+        pass
