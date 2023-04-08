@@ -82,6 +82,8 @@ app = create_app()
 
 # @app.on_event("startup")
 # async def init_tables():
+#     from core.db import Base
+#     from core.db.session import engines
 #     engine = engines.get("writer")
 #     async with engine.begin() as conn:
 #         await conn.run_sync(Base.metadata.drop_all)

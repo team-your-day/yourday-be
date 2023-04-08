@@ -9,6 +9,17 @@ class ChatListResponse(BaseModel):
     chat: List[ChatSchema]
 
     class Config:
+        include = {
+            "chat": {
+                "__all__": {
+                    "id": ...,
+                    "user_id": ...,
+                    "content": ...,
+                    "is_ai": ...,
+                    "saved_at": ...,
+                }
+            }
+        }
         schema_extra = {
             "example": {
                 "chat": [
@@ -53,15 +64,23 @@ class ChatResponse(BaseModel):
     chat: ChatSchema
 
     class Config:
+        include = {
+            "chat": {
+                "id": ...,
+                "user_id": ...,
+                "content": ...,
+                "is_ai": ...,
+                "saved_at": ...,
+            }
+        }
         schema_extra = {
             "example": {
                 "chat": {
                     "id": 2,
                     "user_id": 1,
-                    "thread_id": "bb743fdd-3273-44fe-9f3e-1713e0c5abe9",
                     "content": "오늘 맛집에 갔는데 사람이 많았어.",
                     "is_ai": True,
-                    "created_at": "2023-04-05 23:32:28",
+                    "saved_at": "2023-04-08",
                 }
             }
         }

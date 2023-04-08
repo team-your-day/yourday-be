@@ -18,8 +18,7 @@ class DiaryListResponse(BaseModel):
                         "id": 1,
                         "user_id": 1,
                         "content": "맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다. 맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다.",
-                        "created_at": kst_now().strftime("%Y-%m-%d %H:%M:%S"),
-                        "updated_at": kst_now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "saved_at": kst_now().strftime("%Y-%m-%d"),
                     },
                 ]
             }
@@ -36,8 +35,7 @@ class DiaryResponse(BaseModel):
                     "id": 1,
                     "user_id": 1,
                     "content": "맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다. 맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다.",
-                    "created_at": kst_now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "updated_at": kst_now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "saved_at": kst_now().strftime("%Y-%m-%d"),
                 },
             }
         }

@@ -4,6 +4,7 @@ from starlette.requests import Request
 from api.chat.request.chat import CreateChatRequest
 from api.chat.response.chat import ChatListResponse, ChatResponse
 from api.diary.response.diary import DiaryResponse, DiaryListResponse
+from app.chat.services.chat import ChatService
 from core.exceptions import BadRequestException, UnauthorizedException
 from core.exceptions.schema import ExceptionResponseSchema
 from core.fastapi.dependencies.permission import IsAuthenticated, PermissionDependency
@@ -15,6 +16,7 @@ chat_router = APIRouter()
 @chat_router.get(
     "/{month}/{day}",
     response_model=ChatListResponse,
+    response_model_include=ChatListResponse.Config.include,
     dependencies=[
         Depends(PermissionDependency([IsAuthenticated]))
     ],
@@ -63,11 +65,15 @@ async def get_chat_list(request: Request):
             },
         ]
     }
+    # chat_service = ChatService()
+    # chat_list = await chat_service.get_chat_list(request.user.id)
+    # return {"chat": chat_list}
 
 
 @chat_router.post(
     "/{month}/{day}",
     response_model=ChatResponse,
+    response_model_include=ChatResponse.Config.include,
     dependencies=[
         Depends(PermissionDependency([IsAuthenticated]))
     ],
@@ -87,9 +93,8 @@ async def create_chat(
         "chat": {
             "id": 2,
             "user_id": 1,
-            "thread_id": "bb743fdd-3273-44fe-9f3e-1713e0c5abe9",
             "content": "오늘 맛집에 갔는데 사람이 많았어.",
             "is_ai": True,
-            "created_at": "2023-04-05 23:32:28",
+            "saved_at": "2023-04-08",
         }
     }

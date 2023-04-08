@@ -34,9 +34,19 @@ async def get_diary(
     day가 0이면 해당 month의 데이터를 전체 조회합니다.
     month는 0이 아닌 값이 들어와야 합니다.
     """
-    diary_service = DiaryService()
-    diary_list = await diary_service.get_diary(request.user.id, int(month), int(day))
-    return {"diary": diary_list}
+    return {
+        "diary": [
+            {
+                "id": 1,
+                "user_id": 1,
+                "content": "맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다. 맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다.",
+                "saved_at": kst_now().strftime("%Y-%m-%d"),
+            }
+        ]
+    }
+    # diary_service = DiaryService()
+    # diary_list = await diary_service.get_diary(request.user.id, int(month), int(day))
+    # return {"diary": diary_list}
 
 
 @diary_router.post(
@@ -58,9 +68,17 @@ async def create_diary(
     month: str = Path(...),
     day: str = Path(...)
 ):
-    diary_service = DiaryService()
-    diary = await diary_service.create_diary(request.user.id, int(month), int(day))
-    return {"diary": diary}
+    return {
+        "diary": {
+            "id": 1,
+            "user_id": 1,
+            "content": "맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다. 맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다.",
+            "saved_at": kst_now().strftime("%Y-%m-%d"),
+        }
+    }
+    # diary_service = DiaryService()
+    # diary = await diary_service.create_diary(request.user.id, int(month), int(day))
+    # return {"diary": diary}
 
 
 @diary_router.patch(
@@ -87,6 +105,14 @@ async def update_diary(
     day: str = Path(...),
     content: str = Body(..., description="수정할 일기 본문")
 ):
-    diary_service = DiaryService()
-    diary = await diary_service.update_diary(request.user.id, int(month), int(day), content)
-    return {"diary": diary}
+    return {
+        "diary": {
+            "id": 1,
+            "user_id": 1,
+            "content": "맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다. 맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다. 페퍼로니 피자는 언제 먹어도 맛있다.맛있는 피자를 먹었다.",
+            "saved_at": kst_now().strftime("%Y-%m-%d"),
+        }
+    }
+    # diary_service = DiaryService()
+    # diary = await diary_service.update_diary(request.user.id, int(month), int(day), content)
+    # return {"diary": diary}
