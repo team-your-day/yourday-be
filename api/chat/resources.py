@@ -28,7 +28,11 @@ chat_router = APIRouter()
     },
     summary="chat history 조회 API",
 )
-async def get_chat_list(request: Request):
+async def get_chat_list(
+    request: Request,
+    month: str = Path(...),
+    day: str = Path(...),
+):
     return {
         "chat": [
             {
@@ -83,7 +87,9 @@ async def get_chat_list(request: Request):
 )
 async def create_chat(
     request: Request,
-    body: CreateChatRequest,
+    month: str = Path(...),
+    day: str = Path(...),
+    body: CreateChatRequest = Body(...),
 ):
     return {
         "chat": {
