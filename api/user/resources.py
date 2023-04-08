@@ -83,7 +83,7 @@ async def get_user_info(
     request: Request,
 ):
     user = await UserService().get_user_by_user_id(user_id=request.user.id)
-    return {"data": user}
+    return {"user": user}
 
 
 @user_router.patch(
