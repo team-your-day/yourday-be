@@ -27,7 +27,8 @@ class UserService:
         tone: ToneEnum,
         interview: InterviewTypeEnum,
     ) -> UserSchema:
-        user_hash = str(hashlib.sha1(json.dumps(a, sort_keys=True).encode()).hexdigest())
+        key = f"{name}{nickname}{tone.value}{interview.value}"
+        user_hash = str(hashlib.sha1(json.dumps(key, sort_keys=True).encode()).hexdigest())
         user = await self.user_repo.get_user_by_user_hash(user_hash)
         if user:
             return user
