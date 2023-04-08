@@ -17,7 +17,7 @@ class Config(BaseSettings):
 
 class DevelopmentConfig(Config):
     WRITER_DB_URL: str = f"mysql+aiomysql://admin:masterpassword@database-2.cztglubqcnqf.ap-northeast-2.rds.amazonaws.com:3306/yourday"
-    READER_DB_URL: str = f"mysql+aiomysql://admin:masteroassword@database-2.cztglubqcnqf.ap-northeast-2.rds.amazonaws.com:3306/yourday"
+    READER_DB_URL: str = f"mysql+aiomysql://admin:masterpassword@database-2.cztglubqcnqf.ap-northeast-2.rds.amazonaws.com:3306/yourday"
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
 

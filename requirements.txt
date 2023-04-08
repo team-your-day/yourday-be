@@ -1,10 +1,14 @@
+aiohttp==3.8.4
 aiomysql==0.1.1
+aiosignal==1.3.1
 amqp==5.0.9
 anyio==3.6.1
 appnope==0.1.2
 arrow==1.2.1
 asgiref==3.5.2
 astroid==2.4.2
+async-timeout==4.0.2
+attrs==22.2.0
 backcall==0.2.0
 backports.entry-points-selectable==1.1.1
 billiard==3.6.4.0
@@ -31,6 +35,7 @@ dependency-injector==4.39.1
 distlib==0.3.3
 fastapi==0.95.0
 filelock==3.4.0
+frozenlist==1.3.3
 greenlet==1.1.2
 h11==0.14.0
 html5lib==1.1
@@ -51,7 +56,9 @@ MarkupSafe==2.0.1
 matplotlib-inline==0.1.3
 mccabe==0.6.1
 msgpack==1.0.3
+multidict==6.0.4
 nodeenv==1.6.0
+openai==0.27.4
 packaging==20.9
 parso==0.8.3
 pastel==0.2.1
@@ -69,6 +76,7 @@ ptyprocess==0.7.0
 pycparser==2.21
 pydantic==1.9.1
 Pygments==2.10.0
+PyJWT==2.4.0
 pylev==1.4.0
 pylint==2.5.3
 PyMySQL==1.0.2
@@ -88,6 +96,7 @@ starlette==0.26.1
 text-unidecode==1.3
 toml==0.10.1
 tomlkit==0.8.0
+tqdm==4.65.0
 traitlets==5.1.1
 typing_extensions==4.2.0
 urllib3==1.26.7
@@ -97,3 +106,4 @@ virtualenv==20.10.0
 wcwidth==0.2.5
 webencodings==0.5.1
 wrapt==1.12.1
+yarl==1.8.2
