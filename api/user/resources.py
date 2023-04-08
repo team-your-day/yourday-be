@@ -112,4 +112,4 @@ async def update_user_info(request: Request, body: UpdateUserInfoRequest):
         body.tone,
         body.interview,
     )
-    return {"data": user}
+    return {"user": user}
