@@ -56,18 +56,18 @@ class UserRepository(BaseRepo):
         tone: Optional[ToneEnum],
         interview: Optional[InterviewTypeEnum],
     ) -> Optional[UserSchema]:
-        user = await self.get_user(user_id)
-        if not user:
-            return None
+        query = select(self.model).where(self.model.id == user_id)
+        query = await session.execute(query)
+        user = query.scalars().first()
 
-        if not name:
+        if name:
             user.name = name
-        if not nickname:
+        if nickname:
             user.nickname = nickname
-        if not tone:
-            user.tone = tone
-        if not interview:
-            user.interview = interview
+        if tone:
+            user.tone = tone.value
+        if interview:
+            user.interview = interview.value
 
         session.add(user)
         await session.flush()
