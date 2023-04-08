@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Path, Response, Depends, Body
 from starlette.requests import Request
 
+from api.diary.request.diary import UpdateDiaryRequestSerializer
 from api.diary.response.diary import DiaryResponse, DiaryListResponse
 from app.diary.services.diary import DiaryService
 from core.exceptions import BadRequestException, UnauthorizedException
@@ -103,7 +104,7 @@ async def update_diary(
     request: Request,
     month: str = Path(...),
     day: str = Path(...),
-    content: str = Body(..., description="수정할 일기 본문")
+    body: UpdateDiaryRequestSerializer = Body(...)
 ):
     return {
         "diary": {
