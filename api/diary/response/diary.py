@@ -26,7 +26,7 @@ class DiaryListResponse(BaseModel):
 
 
 class DiaryResponse(BaseModel):
-    diart: DiarySchema
+    diary: DiarySchema
 
     class Config:
         schema_extra = {
