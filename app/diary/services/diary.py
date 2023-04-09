@@ -52,7 +52,7 @@ Be {tone.value} tone. Have an empathy on my emotion. Write in Korean.
             completion = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=messages,
-                temperature=0.7,
+                temperature=0.5,
                 max_tokens=800,
             )
         except Exception as e:
