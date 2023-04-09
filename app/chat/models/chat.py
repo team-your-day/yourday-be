@@ -9,7 +9,7 @@ class Chat(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer)
-    diary_id = Column(String(20), index=True)
     content = Column(Text)
+    saved_at = Column(DateTime)
     is_ai = Column(Boolean, default=False)
     created_at = Column(DateTime, default=kst_now)

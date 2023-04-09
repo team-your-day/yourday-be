@@ -13,6 +13,7 @@ class Config(BaseSettings):
     JWT_SECRET_KEY: str = os.getenv("SECRET_KEY", "5dmhxb*_x9^acw+6zoi0e3!g_vlmkbc(^+at%fnp$44+7&^c")
     JWT_ALGORITHM: str = "HS256"
     SENTRY_SDN: str = None
+    GPT_KEY: str = os.getenv("GPT_KEY", "sk-xxxxxx")
 
 
 class DevelopmentConfig(Config):

@@ -33,41 +33,9 @@ async def get_chat_list(
     month: str = Path(...),
     day: str = Path(...),
 ):
-    return {
-        "chat": [
-            {
-                "id": 1,
-                "user_id": 1,
-                "content": "오늘 무슨 일이 있었나요?",
-                "is_ai": True,
-                "saved_at": "2023-04-08",
-            },
-            {
-                "id": 2,
-                "user_id": 1,
-                "content": "오늘 맛집에 갔는데 사람이 많았어.",
-                "is_ai": False,
-                "saved_at": "2023-04-08",
-            },
-            {
-                "id": 3,
-                "user_id": 1,
-                "content": "그랬군요 얼마나 맛집이길래 사람이 많았어요?",
-                "is_ai": True,
-                "saved_at": "2023-04-08",
-            },
-            {
-                "id": 4,
-                "user_id": 1,
-                "content": "응 방송에도 소개돼서 사람이 더 많이 몰렸나 봐 갈비찜이 맛있더라.",
-                "is_ai": False,
-                "saved_at": "2023-04-08",
-            },
-        ]
-    }
-    # chat_service = ChatService()
-    # chat_list = await chat_service.get_chat_list(request.user.id)
-    # return {"chat": chat_list}
+    chat_service = ChatService()
+    chat_list = await chat_service.get_chat_list(request.user.id, int(month), int(day))
+    return {"chat": chat_list}
 
 
 @chat_router.post(
@@ -91,12 +59,6 @@ async def create_chat(
     day: str = Path(...),
     body: CreateChatRequest = Body(...),
 ):
-    return {
-        "chat": {
-            "id": 2,
-            "user_id": 1,
-            "content": "오늘 맛집에 갔는데 사람이 많았어.",
-            "is_ai": True,
-            "saved_at": "2023-04-08",
-        }
-    }
+    chat_service = ChatService()
+    chat = await chat_service.create_chat(request.user.id, int(month), int(day), body.content)
+    return {"chat": chat}
