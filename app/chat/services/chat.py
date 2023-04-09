@@ -44,12 +44,12 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
 
         openai.api_key = self.gpt_key
         chat_histories = await self.chat_repo.get_chat_histories(user_id, month, day)
-        summarized_sentence = ''
-        if chat_histories:
-            summarized_sentence = await summary(chat_histories)
+        # summarized_sentence = ''
+        # if chat_histories:
+        #     summarized_sentence = await summary(chat_histories)
 
         gpt_reply = await self.create_gpt_reply(
-            user_id, month, day, content, user.nickname, user.interview, user.tone, summarized_sentence
+            user_id, month, day, content, user.nickname, user.interview, user.tone
         )
         return await self.chat_repo.create_chat(user_id, saved_at, gpt_reply, is_ai=True)
 
@@ -62,7 +62,6 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
         nickname: str,
         interview: InterviewTypeEnum,
         tone: ToneEnum,
-        summarized_sentence: str,
     ):
         openai.api_key = self.gpt_key
         interview_prompt = await self.get_interview_prompt(interview)
@@ -70,7 +69,7 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
             {
                 'role': 'system',
                 'content': f'''
-I want you to act as a friend of mine. Your name is {nickname} from now. You will ask me how was my day. 
+I want you to act as a friend of mine. Your name is {nickname} from now.
 I want you {interview_prompt}. 
 I want you to only do the conversation with me. Ask me the questions and wait for my answers. Do not write explanations. 
 Be {tone.value} tone. Have an empathy on my emotion.
@@ -79,10 +78,6 @@ Be {tone.value} tone. Have an empathy on my emotion.
             {
                 'role': 'user',
                 'content': f'{content}'
-            },
-            {
-                'role': 'assistant',
-                'content': f'{summarized_sentence}'
             },
         ]
 
