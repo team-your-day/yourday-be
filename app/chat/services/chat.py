@@ -49,7 +49,7 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
             summarized_sentence = await summary(chat_histories)
 
         gpt_reply = await self.create_gpt_reply(
-            user_id, month, day, content, user.name, user.interview, user.tone, summarized_sentence
+            user_id, month, day, content, user.name, user.nickname, user.interview, user.tone, summarized_sentence
         )
         return await self.chat_repo.create_chat(user_id, saved_at, gpt_reply, is_ai=True)
 
@@ -59,6 +59,7 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
         month: int,
         day: int,
         content: str,
+        name: str,
         nickname: str,
         interview: InterviewTypeEnum,
         tone: ToneEnum,
@@ -70,7 +71,7 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
             {
                 'role': 'system',
                 'content': f'''
-I want you to act as a friend of mine. Your name is {nickname} from now.
+I want you to act as a friend of mine. My name is {name}, From now on, Your name is {nickname}.
 I want you {interview_prompt}. 
 I want you to only do the conversation with me. you must Unconditionally agree with what I said. Do not write explanations.
 Please use the past chat history only for understanding the context of the conversation and do not mention it directly.
