@@ -73,6 +73,7 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
 I want you to act as a friend of mine. Your name is {nickname} from now.
 I want you {interview_prompt}. 
 I want you to only do the conversation with me. Ask me the questions and wait for my answers. Do not write explanations. 
+Please use the past chat history only for understanding the context of the conversation and do not mention it directly.
 Be {tone.value} tone. Have an empathy on my emotion.
                 '''
             },

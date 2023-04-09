@@ -37,9 +37,10 @@ class DiaryService:
             {
                 'role': 'system',
                 'content': f'''
-From now on, You`re name is {nickname}. I want you to act like me. Write me a diary based on my answer before. 
-Don't describe the post and your analysis and introduce yourself. Write on informal languages. 
-Be {tone.value} tone. Have an empathy on my emotion.
+Write me a Journal based on my answer before. 
+You must not write anything that I didn't say. Do not write explanations. Write on informal languages. 
+Don't describe yourself. Be {tone.value} tone. Have an empathy on my emotion.
+Write under two paragraphs. Don't anticipate yourself.
                 '''
             },
             {
@@ -66,6 +67,7 @@ Be {tone.value} tone. Have an empathy on my emotion.
 
     @Transactional()
     async def create_diary(self, user_id: int, month: int, day: int) -> Optional[DiarySchema]:
+        openai.api_key = self.gpt_key
         user = await self.user_repo.get_user(user_id)
         chat_histories = await self.chat_repo.get_chat_histories(user_id, month, day)
 
