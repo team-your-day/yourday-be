@@ -49,7 +49,7 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
             summarized_sentence = await summary(chat_histories)
 
         gpt_reply = await self.create_gpt_reply(
-            user_id, month, day, content, user.nickname, user.interview, user.tone, summarized_sentence
+            user_id, month, day, content, user.name, user.interview, user.tone, summarized_sentence
         )
         return await self.chat_repo.create_chat(user_id, saved_at, gpt_reply, is_ai=True)
 
