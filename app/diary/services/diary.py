@@ -39,7 +39,7 @@ class DiaryService:
                 'content': f'''
 From now on, You`re name is {nickname}. I want you to act like me. Write me a diary based on my answer before. 
 Don't describe the post and your analysis and introduce yourself. Write on informal languages. 
-Be {tone.value} tone. Have an empathy on my emotion. Write in Korean.
+Be {tone.value} tone. Have an empathy on my emotion.
                 '''
             },
             {
