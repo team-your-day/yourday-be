@@ -23,8 +23,8 @@ class ChatService:
     async def get_interview_prompt(self, interview: InterviewTypeEnum) -> str:
         interview_prompt_map = {
             InterviewTypeEnum.low: '''
-                to make me tell lots of episode of my day. Each episode depth can be short. 
-                Focus on extracting numbers of episode of my day. Do not write all the conservation at once.
+to make me tell lots of episode of my day. Each episode depth can be short. 
+Focus on extracting numbers of episode of my day. Do not write all the conservation at once.
             ''',
             InterviewTypeEnum.deep: 'to get deep insight of my daily experience.',
         }
@@ -72,9 +72,8 @@ class ChatService:
                 'content': f'''
 I want you to act as a friend of mine. Your name is {nickname} from now. You will ask me how was my day. 
 I want you {interview_prompt}. 
-I want you to only do the conversation with me. Ask me the questions and wait for my answers.
+I want you to only do the conversation with me. Ask me the questions and wait for my answers. Do not write explanations. 
 Be {tone.value} tone. Have an empathy on my emotion.
-Do not explain your self. Just write the conversation. Do not write explanations. 
                 '''
             },
             {
