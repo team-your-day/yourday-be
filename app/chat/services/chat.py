@@ -45,8 +45,8 @@ class ChatService:
         openai.api_key = self.gpt_key
         chat_histories = await self.chat_repo.get_chat_histories(user_id, month, day)
         summarized_sentence = ''
-        if chat_histories:
-            summarized_sentence = await summary(chat_histories)
+        # if chat_histories:
+        #     summarized_sentence = await summary(chat_histories)
 
         gpt_reply = await self.create_gpt_reply(
             user_id, month, day, content, user.nickname, user.interview, user.tone, summarized_sentence
