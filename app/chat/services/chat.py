@@ -45,8 +45,8 @@ class ChatService:
         openai.api_key = self.gpt_key
         chat_histories = await self.chat_repo.get_chat_histories(user_id, month, day)
         summarized_sentence = ''
-        # if chat_histories:
-        #     summarized_sentence = await summary(chat_histories)
+        if chat_histories:
+            summarized_sentence = await summary(chat_histories)
 
         gpt_reply = await self.create_gpt_reply(
             user_id, month, day, content, user.nickname, user.interview, user.tone, summarized_sentence
@@ -72,8 +72,9 @@ class ChatService:
                 'content': f'''
 I want you to act as a friend of mine. Your name is {nickname} from now. You will ask me how was my day. 
 I want you {interview_prompt}. 
-I want you to only do the conversation with me. Ask me the questions and wait for my answers. Do not write explanations. 
+I want you to only do the conversation with me. Ask me the questions and wait for my answers.
 Be {tone.value} tone. Have an empathy on my emotion. Write in Korean.
+Do not explain your self. Just write the conversation. Do not write explanations. 
                 '''
             },
             {
