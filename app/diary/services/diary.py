@@ -5,81 +5,55 @@ import openai as openai
 
 from app.chat.models.chat import Chat
 from app.chat.repositories.chat import ChatRepository
+from app.chat.schemas.chat import ChatSchema
 from app.diary.models.diary import Diary
 from app.diary.repositories.diary import DiaryRepository
 from app.diary.schemas.diary import DiarySchema
-from app.user.enums.user import InterviewTypeEnum
+from app.user.enums.user import InterviewTypeEnum, ToneEnum
 from app.user.models.user import User
 from app.user.repositories.user import UserRepository
+from core.config import config
 from core.db import Transactional
+from core.utils.gpt_summary import summary
 from core.utils.timezone import kst_now
 
 
 class DiaryService:
     def __init__(self):
+        self.gpt_key = config.GPT_KEY
+
         self.user_repo = UserRepository(User)
         self.chat_repo = ChatRepository(Chat)
         self.diary_repo = DiaryRepository(Diary)
 
-    async def get_interview_prompt(self, interview: InterviewTypeEnum) -> str:
-        interview_prompt_map = {
-            InterviewTypeEnum.low: '''
-                to make me tell lots of episode of my day. Each episode depth can be short. 
-                Focus on extracting numbers of episode of my day. Do not write all the conservation at once.
-            ''',
-            InterviewTypeEnum.deep: 'to get deep insight of my daily experience.',
-        }
-        return interview_prompt_map[interview]
-
-    async def summary(self, chat_histories: List[Chat]) -> str:
-        answer = "\n".join([chat.content for chat in chat_histories])
-        completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    'role': 'system',
-                    'content': "Don't describe the post and your analysis and introduce yourself."
-                },
-                {
-                    'role': 'user',
-                    'content': f'Summarize daily routine based on the conversation below. Write in English. ###\\n{answer}\\n###'
-                }
-            ],
-        )
-
-        return str(completion.choices[0].message.content)
-
     async def create_diary_from_openai(
         self,
         nickname: str,
-        interview: InterviewTypeEnum,
+        tone: ToneEnum,
         summarized_sentence: str,
     ) -> str:
-        interview_prompt = await self.get_interview_prompt(interview)
+        openai.api_key = self.gpt_key
         messages = [
             {
                 'role': 'system',
                 'content': f'''
-I want you to act as a friend of mine. Your name is {nickname} from now. You will ask me how was my day. 
-I want you {interview_prompt}. 
-I want you to only do the conversation with me. Ask me the questions and wait for my answers. Do not write explanations. 
-Be slight humourous with confident tone. Have an empathy on my emotion. Write in Korean.
+From now on, You`re name is {nickname}. I want you to act like me. Write me a diary based on my answer before. 
+Don't describe the post and your analysis and introduce yourself. Write on informal languages. 
+Be {tone.value} tone. Have an empathy on my emotion. Write in Korean.
                 '''
             },
             {
                 'role': 'user',
-                'content': f'Write a diary in Korean. ###\\n{summarized_sentence}\\n###'
+                'content': f'{summarized_sentence}'
             },
-            {
-                'role': 'assistant',
-                'content': summarized_sentence
-            }
         ]
 
         try:
             completion = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=messages,
+                temperature=0.7,
+                max_tokens=800,
             )
         except Exception as e:
             print(f"OpenAI API request failed: {e}")
@@ -100,10 +74,10 @@ Be slight humourous with confident tone. Have an empathy on my emotion. Write in
         if not chat_histories:
             return None
 
-        summarized_sentence = await self.summary(chat_histories)
+        summarized_sentence = await summary(chat_histories)
         diary_content = await self.create_diary_from_openai(
             user.nickname,
-            user.interview,
+            user.tone,
             summarized_sentence,
         )
 
@@ -115,5 +89,5 @@ Be slight humourous with confident tone. Have an empathy on my emotion. Write in
         )
 
     @Transactional()
-    async def update_diary(self, user_id: int, month: int, day: int, content: str):
+    async def update_diary(self, user_id: int, month: int, day: int, content: str) -> Optional[DiarySchema]:
         return await self.diary_repo.update_diary(user_id, month, day, content)
