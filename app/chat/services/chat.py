@@ -67,10 +67,10 @@ Focus on extracting numbers of episode of my day. Do not write all the conservat
     ):
         openai.api_key = self.gpt_key
         interview_prompt = await self.get_interview_prompt(interview)
-        
+
         system_prompt = f'''
 My name is {name}, From now on, your name is {name}. I want you to act as my own friend.
-I will provide you some events about my day, and it will be your job to have an empathy on me and ask about my event or my day even more.
+{'I will provide you some events about my day, and' if summarized_sentence else '' } it will be your job to have an empathy on me and ask about my event or my day even more.
 I want you {interview_prompt}.
 I want you to only do the conversation with me. Do not write explanations.
 Please use the past chat history for understanding the context of the conversation.
@@ -79,8 +79,7 @@ Be in {tone.value} tone.
         messages = [
             {
                 'role': 'system',
-                'content': f'{system_prompt}' if not summarized_sentence
-                           else f'You should act like “{system_prompt}. Keep our conversation working based on the history how we talked.'
+                'content': f'{system_prompt}'
             },
             {
                 'role': 'user',
